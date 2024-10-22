@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,18 +69,18 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'chatapp.wsgi.application'
+WSGI_APPLICATION = 'chatapp.wsgi.application'
 ASGI_APPLICATION = "chatapp.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.daphne',
-#        'NAME': BASE_DIR / 'db.daphne',
-#    }
-# }
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
+}
 
 
 # Password validation
