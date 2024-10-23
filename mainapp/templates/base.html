@@ -9,16 +9,25 @@
     <form id="form">
         <input type="text" name="message"/>
     </form>
+
+    <div id="messages"></div>
 </body>
 
-<script>
-    let url = 'ws://${window.location.host}/ws/socket-server/';
+<script type="text/javascript">
+    let url = 'ws://localhost:8000/ws/socket-server/';
 
     const chatSocket = new WebSocket(url);
 
     chatSocket.onmessage = function(e) {
         let data = JSON.parse(e.data)
         console.log(data)
+
+        if (data.type === 'chat') {
+            let messages = document.getElementById("messages");
+            messages.insertAdjacentHTML('beforeend', `<div>
+                    <p>${data.message}</p>
+                </div>`)
+        }
     }
 
     let form = document.getElementById("form");

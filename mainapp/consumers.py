@@ -5,11 +5,15 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         self.send(text_data=json.dumps({
-            'type': 'connection_established',
-            'message': 'you are now connected',
+            'type':'connection_established',
+            'message':'you are now connected',
         }))
     
     def receive(self, text_data):
-        text_data_json = json.loads(text_data) # konvertera tillbaka till json
+        text_data_json = json.loads(text_data) # converts back to json
         message = text_data_json['message']
         print(message)
+        self.send(text_data=json.dumps({
+            'type':'chat',
+            'message':message,
+        }))
