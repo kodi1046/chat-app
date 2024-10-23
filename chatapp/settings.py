@@ -72,6 +72,13 @@ TEMPLATES = [
 
 ASGI_APPLICATION = "chatapp.asgi.application"
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels.layers.InMemoryChannelLayer' 
+        # this stores the channels locally, not in a db, should use Redis instead for production
+    }
+}
+
 WSGI_APPLICATION = 'chatapp.wsgi.application'
 
 # Database
