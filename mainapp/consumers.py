@@ -53,8 +53,7 @@ class ChatConsumer(WebsocketConsumer):
             'message':message,
             'id': event['id'],
         }))
-
-        
+       
 
     def chat_image(self, event):
         image = event['image']

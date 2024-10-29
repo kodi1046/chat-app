@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="card my-4">
+        <div class="card my-4" style="flex-grow: 1;">
             <div class="card-body">
                 <div id="messages"></div>
             </div>
@@ -19,8 +19,10 @@
         <form id="form">
             <input type="text" name="message"/>
         </form>  
-        <input type="file" id="fileInput" accept="image/jpeg, image/png" style="display: none;">
-        <button id="uploadButton">Upload Image</button>
+        <div class="continer" style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #ccc; padding: 10px; margin-top: auto;">
+            <input type="file" id="fileInput" class="form-control" accept="image/jpeg, image/png" style="flex: 1; margin-right: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; display: none;">
+            <button　type="button" class="btn btn-primary" id="uploadButton">Upload Image</button>
+        </div>
     </div>
 </body>
 
@@ -39,13 +41,16 @@
         if (data.type === 'chat_messagechat') {
             let messages = document.getElementById("messages");
             messages.insertAdjacentHTML('beforeend', `<div>
-                    <p>${data.message}</p>
-                    <p>user${data.id}</p>
+                    <p>user${data.id}: ${data.message}</p>
+
                 </div>`)
         }
 
-        else if (data.type === 'chat_imagechat') {
-            console.log(e)
+        else if (data.type === 'chat_messageimage') {
+            let image = data.image;
+            const img = document.createElement('img');
+            img.src = image;
+            document.getElementById('messages').appendChild(img);
         }
     }
 
@@ -67,22 +72,20 @@
     });
 
     // gets triggered when button is pressed
-    chatSocket.onopen = function() {
-        const fileInput = document.getElementById('fileInput');
-        fileInput.onchange = function() {
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const base64String = event.target.result.split(',')[1]; // Get base64 part
-                console.log(base64String)
-                chatSocket.send(JSON.stringify({
-                    'type':'image',
-                    'image': base64String,
-                    'id':ID,
-                }));
-            };
-            reader.readAsDataURL(file); // Read the file as a Data URL
+
+    const fileInput = document.getElementById('fileInput');
+    fileInput.onchange = function() {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const base64String = event.target.result; // Get base64 part
+            chatSocket.send(JSON.stringify({
+                'type':'image',
+                'image': base64String,
+                'id':ID,
+            }));
         };
+        reader.readAsDataURL(file); // Read the file as a Data URL
     };
 
 </script>
