@@ -12,25 +12,24 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card my-4">
-            <div class="card-body">
-                <div id="messages"></div>
-            </div>
-        </div>  
-
-        <form id="form">
-            <input type="text" name="message"/>
-        </form>  
-        <div class="continer">
-            <input type="file" id="fileInput" class="form-control" accept="image/jpeg, image/png">
-            <button　type="button" class="btn btn-primary" id="uploadButton">Upload Image</button>
-        </div>
+    <div class="main-container">
+        <div class="big-box">
+            <div id="messages"></div>     
+        </div> 
     </div>
+    <div class="bottom-container">
+        <form id="form" class="d-flex">
+            <input type="text" name="message" class="form-control" placeholder="Send a message!"/>
+        </form>  
+        <button　type="button" class="btn btn-primary btn-main" id="uploadButton">Upload Image</button>
+    </div>
+    <input type="file" id="fileInput" accept="image/jpeg, image/png" style="display: none;">
+    
 </body>
 
 <script type="text/javascript">
-    let url = 'ws://localhost:8000/ws/socket-server/'; // 'wss://347c-82-209-141-255.ngrok-free.app/ws/socket-server/'
+
+    let url = 'ws://localhost:8000/ws/socket-server/'; // 'wss://de42-82-209-141-255.ngrok-free.app/ws/socket-server/'
 
     let ID = Math.floor(Math.random() * 10000)
 
@@ -43,8 +42,14 @@
 
         if (data.type === 'chat_messagechat') {
             let messages = document.getElementById('messages');
-            messages.insertAdjacentHTML('beforeend', `<div>
-                    <p>user${data.id}: ${data.message}</p>
+            messages.insertAdjacentHTML('beforeend', `
+                <p class="mt-5">
+                    user${data.id}:
+                </p>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>${data.message}</h4>
+                    </div>
                 </div>`)
         }
 
@@ -52,12 +57,23 @@
             let image = data.image;
             const img = document.createElement('img');
             img.src = image;
+            img.className = "card-img-top img-fluid";
             let messages = document.getElementById('messages');
             messages.insertAdjacentHTML('beforeend', `
-            <p>user${data.id}:</p>
+                <p class="mt-5">
+                    user${data.id}:
+                </p>
             `)
-            messages.appendChild(img);
+            let card = document.createElement('div');
+            card.className = "card";
+            let cardBody = document.createElement('div');
+            cardBody.className = "card-body";
+            cardBody.appendChild(img);
+            card.appendChild(cardBody);
+            messages.appendChild(card);
+            
         }
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     let form = document.getElementById("form");

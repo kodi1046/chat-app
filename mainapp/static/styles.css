@@ -1,3 +1,98 @@
 body {
-    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
+
+.main-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.big-box {
+    flex: 1;
+    padding: 20px;
+}
+
+.bottom-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px;
+    border-top: 2px solid #007BFF;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+@media (max-width: 768px) {
+    .bottom-container {
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .bottom-container input {
+        margin-bottom: 10px;
+    }
+}
+
+.form-control {
+    min-width: 300px;
+    max-width: 500px;
+    margin: 15px
+}
+
+.btn-main {
+    margin: 15px;
+}
+
+.btn {
+    margin-left: 15px
+}
+
+.card {
+    max-width: 600px;
+    max-height: 600px; 
+    width: auto;
+    height: auto;
+    border: 2px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: #007BFF;
+    margin-top: -10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.card-body h4 {
+    flex-grow: 1;
+    margin: 0;
+}
+
+img {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h4 {
+    color: white;
+}
+
